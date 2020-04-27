@@ -1,0 +1,75 @@
+#JDBC配置
+spring:
+  datasource:
+    username: uat_pw_budget
+    password: sq88bZLpqO
+    url: jdbc:mysql://10.58.191.205:7310/budget?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+    #druid连接池配置
+    druid:
+      #初始化时建立物理连接的个数
+      initial-size: 5
+      #最小连接池数量
+      min-idle: 5
+      #最大连接池数量 maxIdle已经不再使用
+      max-active: 20
+      #获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      test-while-idle: true
+      #既作为检测的间隔时间又作为testWhileIdel执行的依据
+      time-between-eviction-runs-millis: 60000
+      #销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接
+      min-evictable-idle-time-millis: 30000
+      #用来检测连接是否有效的sql 必须是一个查询语句
+      #mysql中为 select 'x'
+      #oracle中为 select 1 from dual
+      validation-query: select 'x'
+      #申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-borrow: false
+      #归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false
+      #当数据库抛出不可恢复的异常时,抛弃该连接
+      #exception-sorter: true
+      #是否缓存preparedStatement,mysql5.5+建议开启
+      pool-prepared-statements: true
+      #当值大于0时poolPreparedStatements会自动修改为true
+      max-pool-prepared-statement-per-connection-size: 20
+      #配置扩展插件
+      filters: stat,wall
+      #通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-properties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis: 500
+      #合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+      #设置访问druid监控页的账号和密码,默认没有
+      #spring.datasource.druid.stat-view-servlet.login-username=admin
+      #spring.datasource.druid.stat-view-servlet.login-password=admin
+  data:
+    mongodb:
+      host: 10.58.165.106
+      port: 27017
+      database: budget
+  #spring AOP打开
+  #  aop:
+  #    auto: true
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.gome.budget.dao.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  type-handlers-package: com.gome.budget.dao.handler
+pagehelper:
+  helperDialect: mysql                           #分页插件方言选择
+  reasonable: true                               #合理化参数，设为true时pageNum<=0 时会查第一页， pageNum>pages（超过总数时），会查询最后一页
+  supportMethodsArguments: true
+
+#showSql
+logging:
+  level:
+    com:
+      gome:
+        budget:
+          dao:
+            mapper: debug

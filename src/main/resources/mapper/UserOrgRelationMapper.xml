@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.base.dao.UserOrgRelationMapper">
+    <resultMap id="BaseResultMap" type="com.example.base.entity.UserOrgRelation">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="org_id" jdbcType="VARCHAR" property="orgId"/>
+    </resultMap>
+
+    <select id="getUserOrgRelation" parameterType="string" resultMap="BaseResultMap">
+        select id,user_id,org_id from user_org_relation where user_id=#{userId}
+    </select>
+</mapper>

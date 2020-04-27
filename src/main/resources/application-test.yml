@@ -1,0 +1,10 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /base
+  compression:
+    enabled: true
+
+spring:
+  application:
+    name: base-test
